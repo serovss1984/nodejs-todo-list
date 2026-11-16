@@ -24,5 +24,8 @@
 Клонировать репозиторий:
 
 ```bash
-git clone https://github.com/USERNAME/nodejs-todo-list.git
+git clone https://github.com/serovss1984/nodejs-todo-list.git
 cd nodejs-todo-list
+
+npm init -y
+npm install express ejs better-sqlite3
