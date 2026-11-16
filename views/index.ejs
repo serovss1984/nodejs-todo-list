@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Список задач</title>
+
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <header class="header">
+        <div>
+            <h1>Список задач</h1>
+            <p>Ничего лишнего. Просто задачи.</p>
+        </div>
+
+        <div class="counter">
+            <%= tasks.filter(task => !task.completed).length %>
+        </div>
+    </header>
+
+
+    <form action="/tasks" method="POST" class="add-form">
+
+        <input
+            type="text"
+            name="title"
+            placeholder="Что нужно сделать?"
+            autocomplete="off"
+            required
+        >
+
+        <button type="submit">
+            Добавить
+        </button>
+
+    </form>
+
+
+    <main class="tasks">
+
+        <% if (tasks.length === 0) { %>
+
+            <div class="empty">
+                <div class="empty-icon">✓</div>
+                <h2>Задач пока нет</h2>
+                <p>Добавьте первую задачу выше.</p>
+            </div>
+
+        <% } %>
+
+
+        <% tasks.forEach(task => { %>
+
+            <div class="task <%= task.completed ? 'completed' : '' %>">
+
+                <form
+                    action="/tasks/<%= task.id %>/toggle"
+                    method="POST"
+                    class="toggle-form"
+                >
+                    <button
+                        type="submit"
+                        class="checkbox"
+                        aria-label="Изменить статус задачи"
+                    >
+                        <% if (task.completed) { %>
+                            ✓
+                        <% } %>
+                    </button>
+                </form>
+
+
+                <div class="task-title">
+                    <%= task.title %>
+                </div>
+
+
+                <form
+                    action="/tasks/<%= task.id %>/delete"
+                    method="POST"
+                    class="delete-form"
+                >
+                    <button
+                        type="submit"
+                        class="delete"
+                        aria-label="Удалить задачу"
+                    >
+                        ×
+                    </button>
+                </form>
+
+            </div>
+
+        <% }) %>
+
+    </main>
+
+</div>
+
+</body>
+</html>
